@@ -31,20 +31,40 @@ document.addEventListener("click", function(e) {
     }
 })
 
-
 function addOrder(menuId) {
     const menuItem = menuArray.filter(function(item) {
         return item.id == menuId
     })[0]
-    myOrders.push(menuItem)
+    // check if the item is already added to myOrders
+    if (myOrders.filter(function(order){return order.id == menuItem.id}).length) {
+        // Get the item from the myOrders
+        let currentOrder = myOrders.filter(function(order){return order.id == menuItem.id})[0]
+        currentOrder.totalPrice += menuItem.price
+        currentOrder.quantity++
+    }
+    // add the item to myOrders if it doesn't exists
+    else {
+        menuItem['quantity'] = 1
+        menuItem['totalPrice'] = menuItem.price
+        myOrders.push(menuItem)
+    }
     renderOrders()
 
 }
 
 function removeOrder(orderId) {
-    myOrders = myOrders.filter(function(order) {
-        return order.id != orderId
-    })
+    let currentOrder = myOrders.filter(function(order) {
+        return order.id == orderId
+    })[0]
+    
+    if (currentOrder.quantity == 1) {
+        myOrders = myOrders.filter(function(order) {
+            return order.id != orderId
+        })
+    } else {
+        currentOrder.quantity--
+        currentOrder.totalPrice -= currentOrder.price
+    }
     renderOrders()
 }
 
@@ -56,18 +76,19 @@ function renderOrders() {
     let totalPrice = 0
 
     if (myOrders.length) {
-        console.log(myOrders)
         myOrders.forEach(function(order){
             ordersHtml += `
             <div class="order">
                 <p class="order-name">
                     ${order.name}
-                    <button class="remove-order" data-remove="${order.id}">remove</button>
+                    <button class="decrease-order" data-remove="${order.id}">-</button>
+                    <span>${order.quantity}</span>
+                    <button class="increase-order" data-add="${order.id}">+</button>
                 </p>
-                <p class="order-price">$${order.price}</p>
+                <p class="order-price">$${order.totalPrice}</p>
             </div>
             `
-            totalPrice += order.price
+            totalPrice += order.totalPrice
         })
         document.getElementById("total-price").textContent = `$${totalPrice}`
         ordersElement.innerHTML = ordersHtml
@@ -82,7 +103,6 @@ function renderOrders() {
 function showCheckoutModal() {
     document.getElementById("checkout-modal").style.display = 'block'
 }
-
 
 function render() {
     const products = document.getElementById("products")
