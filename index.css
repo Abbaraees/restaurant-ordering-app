@@ -170,3 +170,14 @@ body {
     font-size: 24px;
     font-weight: bold;
 }
+
+.close-checkout-modal-btn {
+    position: absolute;
+    top: 1px;
+    right: 5px;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #e9e0e0ee;
+    background-color: none;
+    border-radius: 50%;
+}

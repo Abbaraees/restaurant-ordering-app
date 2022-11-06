@@ -29,6 +29,9 @@ document.addEventListener("click", function(e) {
     else if (e.target.id == 'complete-order-btn') {
         showCheckoutModal()
     }
+    else if (e.target.id == 'close-checkout-modal-btn') {
+        closeCheckoutModal()
+    }
 })
 
 function addOrder(menuId) {
@@ -102,6 +105,10 @@ function renderOrders() {
 
 function showCheckoutModal() {
     document.getElementById("checkout-modal").style.display = 'block'
+}
+
+function closeCheckoutModal() {
+    document.getElementById("checkout-modal").style.display = 'none'
 }
 
 function render() {

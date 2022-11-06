@@ -30,11 +30,16 @@
           <button class="complete-order" id="complete-order-btn">Complete Order</button>
         </div>
         <div class="checkout-modal" id="checkout-modal">
+          <button
+            class="close-checkout-modal-btn"
+            id="close-checkout-modal-btn">
+            X
+          </button>
           <form id="checkout-form" class="checkout-form">
             <h2>Enter card details</h2>
             <input type="text" name="name" placeholder="Enter your name" required>
             <input type="text" name="cardNum" placeholder="Enter card number" required>
-            <input type="text" name="cvv" placeholder="Enter CVV">
+            <input type="text" name="cvv" placeholder="Enter CVV" required>
             <button>Pay</button>
           </form>
         </div>
